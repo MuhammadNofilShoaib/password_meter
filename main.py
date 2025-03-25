@@ -33,7 +33,7 @@ def evaluate_password(password):
         feedback.append("🔹 Include at least one digit (0-9).")
 
     # 5. Check for special characters (!@#$%^&*)
-    if re.search(r'[!@#$%^&.*]', password):
+    if re.search(r'[!@#$%^&*]', password):
         score += 1
     else:
         feedback.append("🔹 Include at least one special character (!@#$%^&*).")
@@ -61,17 +61,26 @@ st.write("Enter your password below to check its strength and get suggestions fo
 # User input (Password field)
 password = st.text_input("Enter Password:", type="password")
 
-if password:
-        score, strength_message, feedback, color = evaluate_password(password)
+# Initialize variables to avoid NameError
+strength_message = ""
+color = "black"
+feedback = []
+score = 0
+
+if password:  # Ensure password is not empty
+    score, strength_message, feedback, color = evaluate_password(password)
 
     # Display strength message
-st.markdown(strength_message)
+    st.markdown(f"**Password Strength:** <span style='color:{color}; font-weight:bold'>{strength_message}</span>", unsafe_allow_html=True)
 
     # Progress bar based on score
-st.progress(score / 5)
+    st.progress(score / 5)
 
     # Show suggestions if password is not strong
-if feedback:
+    if feedback:
         st.subheader("Suggestions to improve your password:")
         for tip in feedback:
             st.write(f"- {tip}")
+
+# Footer
+st.markdown("<br><hr><center>🔐 Built with Streamlit</center>", unsafe_allow_html=True)
