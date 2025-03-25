@@ -65,7 +65,7 @@ if password:
         score, strength_message, feedback, color = evaluate_password(password)
 
     # Display strength message
-st.markdown(f"**Password Strength:** <span style='color:{color}; font-weight:bold'>{strength_message}</span>", unsafe_allow_html=True)
+st.markdown(strength_message)
 
     # Progress bar based on score
 st.progress(score / 5)
